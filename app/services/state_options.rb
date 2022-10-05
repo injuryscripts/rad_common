@@ -8,6 +8,7 @@ class StateOptions
     'Colorado' => 'CO',
     'Connecticut' => 'CT',
     'Delaware' => 'DE',
+    'District of Columbia' => 'DC',
     'Florida' => 'FL',
     'Georgia' => 'GA',
     'Hawaii' => 'HI',
@@ -48,7 +49,6 @@ class StateOptions
     'Vermont' => 'VT',
     'Virginia' => 'VA',
     'Washington' => 'WA',
-    'Washington DC' => 'DC',
     'West Virginia' => 'WV',
     'Wisconsin' => 'WI',
     'Wyoming' => 'WY'
