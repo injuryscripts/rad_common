@@ -229,7 +229,7 @@ module RadbearUser
       domains = Company.main.valid_user_domains
       components = email.split('@')
       match_domains = components.count == 2 && domains.include?(components[1])
-      return if (internal? && match_domains)
+      return if internal? && match_domains
 
       errors.add(:email, 'is not authorized for this application, please contact the system administrator')
     end

@@ -164,49 +164,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'external user' do
-    let(:attributes) do
-      { first_name: 'Example',
-        last_name: 'User',
-        authy_enabled: false,
-        mobile_phone: create(:phone_number, :mobile),
-        password: 'cH@ngem3',
-        password_confirmation: 'cH@ngem3',
-        user_status: active_status,
-        external: true }
-    end
-
-    before { Company.main.update! valid_user_domains: %w[example.com radicalbear.com] }
-
-    it 'rejects unauthorized email addresses' do
-      addresses = %w[user@example.com user@radicalbear.com]
-
-      addresses.each do |address|
-        user = described_class.new(attributes.merge(email: address))
-        expect(user).not_to be_valid
-        expect(user.errors.full_messages.to_s).to include 'Email is not authorized for this application'
-      end
-    end
-
-    it 'allows unauthorized email addresses for inactive users', external_user_specs: true do
-      addresses = %w[user@example.com user@radicalbear.com]
-
-      addresses.each do |address|
-        user = described_class.new(attributes.merge(email: address, user_status: inactive_status))
-        expect(user).to be_valid
-      end
-    end
-
-    it 'allows valid email addresses', external_user_specs: true do
-      addresses = %w[joe@abc.com bob@abc.com sally@abc.com]
-
-      addresses.each do |address|
-        user = described_class.new(attributes.merge(email: address))
-        expect(user).to be_valid
-      end
-    end
-  end
-
   describe 'devise lockable' do
     subject { user.access_locked? }
 
