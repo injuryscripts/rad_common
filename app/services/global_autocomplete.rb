@@ -49,7 +49,18 @@ class GlobalAutocomplete
       order = scope[:query_order] || 'created_at DESC'
       query = Pundit.policy_scope!(user, GlobalAutocomplete.check_policy_klass(user, klass))
       query = query.joins(joins) if joins
-      query = query.where(where_query, search: "%#{params[:term]}%").order(order)
+      search_scope = case scope[:query_wildcard]
+                     when :beginning
+                       "%#{params[:term]}"
+                     when :end
+                       "#{params[:term]}%"
+                     when :none
+                       params[:term]
+                     else
+                       "%#{params[:term]}%"
+                     end
+
+      query = query.where(where_query, search: search_scope).order(order)
 
       if params[:excluded_ids].present?
         # TODO: this will fail when scope has joins due to ambiguous id column
