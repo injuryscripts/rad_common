@@ -170,7 +170,7 @@ class RadicalConfig
       config_item(:client_table_name) || 'clients'
     end
 
-    def portal_host_name!(user)
+    def portal_host_name!(user = nil)
       return config_item!(:portal_host_name) if user.blank?
 
       if user.respond_to?(:portal_patient?) && user.portal_patient?
