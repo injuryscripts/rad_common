@@ -42,6 +42,6 @@ class GlobalSearch
     end
 
     def no_records?(scope)
-      Pundit.policy_scope!(current_user, scope[:model].constantize).count.zero?
+      Pundit.policy_scope!(current_user, scope[:model].constantize).exists?
     end
 end
