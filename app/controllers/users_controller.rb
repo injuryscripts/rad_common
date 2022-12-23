@@ -86,11 +86,11 @@ class UsersController < ApplicationController
       return
     end
 
-    if @user.other_audits_created.count.positive?
+    if @user.other_audits_created.exists?
       flash[:error] = "User has audit history, can't delete"
       redirect_back(fallback_location: users_path)
       return
-    elsif @user.audits_created.count.positive?
+    elsif @user.audits_created.exists?
       @user.audits_created.delete_all
     end
 

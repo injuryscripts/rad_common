@@ -76,7 +76,7 @@ class DataColumnsPresenter
     def calc_columns
       items = add_data_items
 
-      if items.count.zero?
+      if items.none?
         [stats]
       elsif items.count <= 5
         [items, stats]

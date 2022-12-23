@@ -20,7 +20,7 @@ class RadSeeder
     end
 
     def seed_notification_types
-      return if NotificationType.count.positive?
+      return if NotificationType.exists?
 
       Notifications::NewUserSignedUpNotification.create! security_roles: [SecurityRole.admin_role]
       Notifications::UserWasApprovedNotification.create! security_roles: [SecurityRole.admin_role]
@@ -30,7 +30,7 @@ class RadSeeder
     end
 
     def seed_users
-      return if User.count.positive?
+      return if User.exists?
 
       display_log 'seeding users'
 
@@ -53,7 +53,7 @@ class RadSeeder
     end
 
     def seed_security_roles
-      return if SecurityRole.count.positive?
+      return if SecurityRole.exists?
 
       seed_admin
       seed_user
@@ -109,7 +109,7 @@ class RadSeeder
     end
 
     def seed_user_statuses
-      return if UserStatus.count.positive?
+      return if UserStatus.exists?
 
       UserStatus.create! name: 'Pending', active: false, validate_email_phone: true
       UserStatus.create! name: 'Active', active: true, validate_email_phone: true
@@ -117,7 +117,7 @@ class RadSeeder
     end
 
     def seed_company
-      return if Company.count.positive?
+      return if Company.exists?
 
       FactoryBot.create :company, email: seeded_user_config.first[:email], valid_user_domains: seeded_user_domains
     end

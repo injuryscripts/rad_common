@@ -236,7 +236,7 @@ module RadbearUser
 
     def validate_sms_mobile_phone
       return if !RadicalTwilio.new.twilio_enabled? || mobile_phone.present?
-      return if notification_settings.enabled.where(sms: true).count.zero?
+      return if notification_settings.enabled.where(sms: true).none?
 
       errors.add(:mobile_phone, 'is required when SMS notification settings are enabled')
     end

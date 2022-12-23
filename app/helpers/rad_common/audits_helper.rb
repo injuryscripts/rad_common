@@ -143,7 +143,7 @@ module RadCommon
         return false if current_user.admin?
 
         restricted_attributes = RadicalConfig.restricted_audit_attributes!
-        return if restricted_attributes.count.zero?
+        return if restricted_attributes.none?
 
         matches = restricted_attributes.select do |item|
           item[:model] == audit.auditable_type && item[:attribute] == changed_attribute

@@ -1,5 +1,5 @@
 - if RadicalConfig.user_clients? && @user.external?
-  - if @user_clients.count.zero?
+  - if @user_clients.none?
     .alert.alert-danger Add at least one client to this user to give them access to their data
   .card
     - can_update = policy(@user).update?

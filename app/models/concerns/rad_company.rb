@@ -38,12 +38,12 @@ module RadCompany
     end
 
     def validate_only_one
-      errors.add(:base, 'Only one company record is allowed.') if Company.count.positive?
+      errors.add(:base, 'Only one company record is allowed.') if Company.exists?
     end
 
     def validate_domains
       return if valid_user_domains.nil?
 
-      errors.add(:valid_user_domains, 'needs at least one domain') if valid_user_domains.count.zero?
+      errors.add(:valid_user_domains, 'needs at least one domain') if valid_user_domains.none?
     end
 end

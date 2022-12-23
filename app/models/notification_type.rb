@@ -129,7 +129,7 @@ class NotificationType < ApplicationRecord
       return unless email_enabled?
 
       id_list = notify_user_ids_opted(:email)
-      return if id_list.count.zero?
+      return if id_list.none?
 
       if mailer_class == 'RadbearMailer' && mailer_method == 'simple_message'
         RadbearMailer.simple_message(id_list,
@@ -151,7 +151,7 @@ class NotificationType < ApplicationRecord
       return unless feed_enabled?
 
       all_ids = notify_user_ids_all
-      return if all_ids.count.zero?
+      return if all_ids.none?
 
       opted_ids = notify_user_ids_opted(:feed)
 
@@ -190,7 +190,7 @@ class NotificationType < ApplicationRecord
                       .not(id: NotificationSetting.where(notification_type: self, enabled: false)
                       .pluck(:user_id)).pluck(:id)
 
-      raise 'no users to notify' if security_roles? && user_ids.count.zero?
+      raise 'no users to notify' if security_roles? && user_ids.none?
 
       return user_ids unless security_roles?
       raise 'exclude_user_ids is invalid' unless exclude_user_ids.is_a?(Array)

@@ -2,13 +2,13 @@ class Seeder < RadSeeder
   def seed!
     super
 
-    if Division.count.zero?
+    if Division.none?
       display_log 'seeding divisions'
 
       30.times { FactoryBot.create :division, owner: users.internal.sample }
     end
 
-    if Attorney.count.zero?
+    if Attorney.none?
       FactoryBot.create_list :attorney, 20
 
       display_log 'seeding duplicate attorneys'
@@ -26,9 +26,9 @@ class Seeder < RadSeeder
       Attorney.all.each(&:process_duplicates)
     end
 
-    3.times { FactoryBot.create :client } if Client.count.zero?
+    3.times { FactoryBot.create :client } if Client.none?
 
-    return unless TwilioLog.count.zero?
+    return unless TwilioLog.none?
 
     display_log 'seeding twilio logs'
 
