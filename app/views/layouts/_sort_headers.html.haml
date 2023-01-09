@@ -24,3 +24,28 @@
         = tag.i '', class: "#{icon} ml-1"
     - else
       = sort_column[:label]
+      - if sort_column.has_key? :expandable
+        %button.btn.btn-primary{ type: 'button',
+                                 class: "toggle-#{sort_column[:expandable][:target][1..-1]}",
+                                 'data-toggle': 'collapse',
+                                 'data-target': sort_column[:expandable][:target],
+                                 'aria-expanded': sort_column[:expandable][:expanded] }
+          %span.expand-label.mr-1= sort_column[:expandable][sort_column[:expandable][:expanded] ? :close : :open]
+          %i.icon.fas{ class: "fa-caret-#{sort_column[:expandable][:expanded] ? 'up' : 'down'}" }
+        :javascript
+          $(document).ready(function() {
+            $('.toggle-#{sort_column[:expandable][:target][1..-1]}').on('click', function() {
+              const $btn = $(this);
+              const $dataTarget = $('#{sort_column[:expandable][:target]}');
+
+              $btn.find('.icon').toggleClass('fa-caret-up fa-caret-down');
+
+              if ($btn.find('.expand-label').text() == '#{sort_column[:expandable][:open]}') {
+                $btn.find('.expand-label').text('#{sort_column[:expandable][:close]}');
+                $dataTarget.siblings('.expanded').addClass('d-none');
+              } else {
+                $btn.find('.expand-label').text('#{sort_column[:expandable][:open]}');
+                $dataTarget.siblings('.expanded').removeClass('d-none');
+              }
+            });
+          });
