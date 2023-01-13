@@ -29,6 +29,7 @@ class EmailAddressValidator < ActiveModel::Validator
     end
 
     def check_sendgrid?(record, field)
+      return false unless record.respond_to?(:running_global_validity)
       return false if record.running_global_validity
 
       record.send("#{field}_changed?")
