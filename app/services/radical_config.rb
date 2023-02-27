@@ -154,8 +154,18 @@ class RadicalConfig
       config_item! :app_name
     end
 
-    def portal_app_name!
-      config_item! :portal_app_name
+    def portal_app_name!(user = nil)
+      return config_item!(:portal_app_name) if user.blank?
+
+      if user.respond_to?(:portal_patient?) && user.portal_patient?
+        config_item! :portal_app_name
+      elsif user.respond_to?(:portal_prescriber?) && user.portal_prescriber?
+        config_item! :prescriber_portal_app_name
+      elsif user.respond_to?(:portal_attorney?) && user.portal_attorney?
+        config_item! :attorney_portal_app_name
+      else
+        config_item! :portal_app_name
+      end
     end
 
     def host_name!

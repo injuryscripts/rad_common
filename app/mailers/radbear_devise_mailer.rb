@@ -102,6 +102,6 @@ class RadbearDeviseMailer < Devise::Mailer
     end
 
     def app_name
-      @resource.portal? ? RadicalConfig.portal_app_name! : RadicalConfig.app_name!
+      @resource.portal? ? RadicalConfig.portal_app_name!(@resource) : RadicalConfig.app_name!
     end
 end

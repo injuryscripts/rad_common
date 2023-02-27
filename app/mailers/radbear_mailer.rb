@@ -107,7 +107,7 @@ class RadbearMailer < ActionMailer::Base
     end
 
     def app_name(user)
-      user.portal? ? RadicalConfig.portal_app_name! : RadicalConfig.app_name!
+      user.portal? ? RadicalConfig.portal_app_name!(user) : RadicalConfig.app_name!
     end
 
     def escape_name(recipient_name)
