@@ -196,6 +196,10 @@ module RadCommon
               class: 'btn btn-secondary btn-sm')
     end
 
+    def portal_domain?
+      request.host_with_port == RadicalConfig.portal_host_name!
+    end
+
     private
 
       def size_symbol_to_int(size_as_symbol)
