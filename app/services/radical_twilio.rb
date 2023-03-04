@@ -11,6 +11,22 @@ class RadicalTwilio
     client.calls.create(from: from_number, to: to, url: URI::Parser.new.escape(url))
   end
 
+  def send_verify_sms(mobile_phone)
+    response = RadicalRetry.perform_request(retry_count: 2, raise_original: true) do
+      verify_service.verifications.create(to: e164_format(mobile_phone), channel: 'sms')
+    end
+
+    response.status == 'pending'
+  end
+
+  def check_verify_sms(mobile_phone, code)
+    response = RadicalRetry.perform_request(retry_count: 2, raise_original: true) do
+      verify_service.verification_checks.create(to: e164_format(mobile_phone), code: code)
+    end
+
+    response.status == 'approved'
+  end
+
   def twilio_enabled?
     RadicalConfig.twilio_enabled?
   end
@@ -55,9 +71,17 @@ class RadicalTwilio
       Twilio::REST::Client.new(RadicalConfig.twilio_account_sid!, RadicalConfig.twilio_auth_token!)
     end
 
+    def verify_service
+      client.verify.services(RadicalConfig.twilio_verify_service_sid!)
+    end
+
     def get_phone_number(attribute, mobile)
       converted_phone_number = attribute.gsub(/[^0-9a-z\\s]/i, '')
       mobile ? lookup_number(converted_phone_number, 'carrier') : lookup_number(converted_phone_number)
+    end
+
+    def e164_format(phone_number)
+      "+1#{phone_number.gsub(/[^0-9a-z\\s]/i, '')}"
     end
 
     def lookup_number(number, type = nil)

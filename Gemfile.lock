@@ -5,17 +5,16 @@ PATH
       active_storage_validations
       audited
       authtrail
-      authy (< 3.0.0)
       aws-sdk-s3
       bootstrap4-kaminari-views (~> 1.0.1)
       devise
-      devise-authy
       devise-security (= 0.16.0)
       devise_invitable
       factory_bot_rails
       faker
       haml-rails (~> 2.0)
       hashids
+      httpclient
       image_processing (~> 1.9)
       kaminari (~> 1.2.1)
       net-imap
@@ -40,8 +39,15 @@ PATH
       smartystreets_ruby_sdk
       strip_attributes
       text
-      twilio-ruby (~> 5.63)
+      twilio-ruby (~> 5.74)
       webpacker
+
+PATH
+  remote: /home/jay/Dev/twilio-verify-devise
+  specs:
+    devise-twilio-verify (1.0.0)
+      devise (>= 4.0.0)
+      twilio-ruby (~> 5.74)
 
 GEM
   remote: https://rubygems.org/
@@ -121,8 +127,6 @@ GEM
       activerecord (>= 5.2)
       railties (>= 5.2)
       warden
-    authy (2.7.5)
-      httpclient (>= 2.5.3.3)
     aws-eventstream (1.2.0)
     aws-partitions (1.628.0)
     aws-sdk-core (3.144.0)
@@ -173,9 +177,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-authy (2.2.1)
-      authy (>= 2.7.5)
-      devise (>= 4.0.0)
     devise-security (0.16.0)
       devise (>= 4.3.0, < 5.0)
     devise_invitable (2.0.6)
@@ -437,9 +438,9 @@ GEM
     tilt (2.0.11)
     timecop (0.9.5)
     timeout (0.3.0)
-    twilio-ruby (5.72.0)
+    twilio-ruby (5.74.4)
       faraday (>= 0.9, < 3.0)
-      jwt (>= 1.5, <= 2.5)
+      jwt (>= 1.5, <= 2.6)
       nokogiri (>= 1.6, < 2.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -478,6 +479,7 @@ DEPENDENCIES
   bootsnap
   capybara
   capybara-selenium
+  devise-twilio-verify!
   haml_lint
   listen
   parallel_tests

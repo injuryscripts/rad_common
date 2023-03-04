@@ -13,6 +13,8 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem 'devise-twilio-verify', path: '/home/jay/Dev/twilio-verify-devise'
+
 group :test do
   gem 'capybara-selenium'
   gem 'parallel_tests'

@@ -34,7 +34,7 @@ RSpec.describe 'Users', type: :request do
         allow(RadicalConfig).to receive(:disable_sign_up?).and_return true
         allow(RadicalConfig).to receive(:disable_invite?).and_return true
 
-        allow_any_instance_of(User).to receive(:authy_enabled?).and_return false
+        allow_any_instance_of(User).to receive(:twilio_verify_enabled?).and_return false
       end
 
       describe 'with valid params' do

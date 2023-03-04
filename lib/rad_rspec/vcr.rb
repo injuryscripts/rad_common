@@ -23,7 +23,7 @@ VCR.configure do |c|
     end
   end
 
-  c.filter_sensitive_data('<AUTHY_API_KEY>') { RadicalConfig.authy_api_key! } if RadicalConfig.authy_api_key.present?
+  c.filter_sensitive_data('<AUTHY_API_KEY>') { '' }
 
   if RadicalConfig.sendgrid_api_key.present?
     c.filter_sensitive_data('<SENDGRID_API_KEY>') { RadicalConfig.sendgrid_api_key! }

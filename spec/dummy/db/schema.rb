@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_18_194026) do
+ActiveRecord::Schema.define(version: 2023_02_22_162024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -342,7 +342,7 @@ ActiveRecord::Schema.define(version: 2022_09_18_194026) do
     t.integer "user_status_id", null: false
     t.string "authy_id"
     t.datetime "last_sign_in_with_authy"
-    t.boolean "authy_enabled", default: true, null: false
+    t.boolean "twilio_verify_enabled", default: true, null: false
     t.string "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -358,7 +358,7 @@ ActiveRecord::Schema.define(version: 2022_09_18_194026) do
     t.datetime "last_activity_at"
     t.datetime "expired_at"
     t.jsonb "filter_defaults"
-    t.boolean "authy_sms", default: true, null: false
+    t.boolean "twilio_verify_sms", default: true, null: false
     t.index ["authy_id"], name: "index_users_on_authy_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

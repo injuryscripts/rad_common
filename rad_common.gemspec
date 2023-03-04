@@ -22,18 +22,15 @@ Gem::Specification.new do |s|
   s.add_dependency 'audited'
   s.add_dependency 'authtrail'
 
-  # TODO: remove this override when we replace authy with twilio verify, see Task 37169
-  s.add_dependency 'authy', '< 3.0.0'
-
   s.add_dependency 'aws-sdk-s3'
   s.add_dependency 'bootstrap4-kaminari-views', '~> 1.0.1'
   s.add_dependency 'devise'
-  s.add_dependency 'devise-authy'
   s.add_dependency 'devise_invitable'
   s.add_dependency 'devise-security', '0.16.0' # locked, see Task 35711
   s.add_dependency 'factory_bot_rails'
   s.add_dependency 'faker'
   s.add_dependency 'haml-rails', '~> 2.0'
+  s.add_dependency 'httpclient'
   s.add_dependency 'hashids'
   s.add_dependency 'image_processing', '~> 1.9'
   s.add_dependency 'kaminari', '~> 1.2.1'
@@ -65,7 +62,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'smartystreets_ruby_sdk'
   s.add_dependency 'strip_attributes'
   s.add_dependency 'text'
-  s.add_dependency 'twilio-ruby', '~> 5.63'
+  s.add_dependency 'twilio-ruby', '~> 5.74'
   s.add_dependency 'webpacker'
 
   s.add_development_dependency 'active_record_doctor'

@@ -1,6 +1,8 @@
 require "#{Gem::Specification.find_by_name('rad_common').gem_dir}/lib/core_extensions/active_record" \
         '/base/schema_validations'
 
+require 'httpclient'
+
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'SMS'
   inflect.acronym 'PDF'
@@ -48,11 +50,6 @@ end
 
 Devise.setup do |config|
   config.mailer = 'RadbearDeviseMailer'
-end
-
-if RadicalConfig.authy_enabled?
-  Authy.api_key = RadicalConfig.authy_api_key!
-  Authy.api_uri = 'https://api.authy.com/'
 end
 
 # https://swell.radicalbear.com/tasks/37444

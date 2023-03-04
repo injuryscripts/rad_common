@@ -212,7 +212,7 @@ RSpec.describe 'Users', type: :system do
   describe 'sign up', js: true, sign_up_specs: true do
     before do
       create :security_role, :external, allow_sign_up: true
-      allow_any_instance_of(User).to receive(:authy_enabled?).and_return false
+      allow_any_instance_of(User).to receive(:twilio_verify_enabled?).and_return false
     end
 
     it 'signs up' do
@@ -445,16 +445,15 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
-  describe 'two factor authentication', authy_specs: true do
+  describe 'two factor authentication', twilio_verify_specs: true do
     let(:authy_id) { '1234567' }
 
     let(:remember_message) do
-      "Remember this device for #{distance_of_time_in_words(Devise.authy_remember_device)}"
+      "Remember this device for #{distance_of_time_in_words(Devise.twilio_verify_remember_device)}"
     end
 
     before do
-      allow(Authy::API).to receive(:register_user).and_return(double(:response, ok?: true, id: authy_id))
-      user.update!(authy_enabled: true, mobile_phone: create(:phone_number, :mobile))
+      user.update!(twilio_verify_enabled: true, mobile_phone: create(:phone_number, :mobile))
     end
 
     it 'allows user to login with authentication token', :vcr do
@@ -470,18 +469,18 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content 'Signed in successfully'
     end
 
-    it 'does not allow user to login with invalid authy token', :vcr do
+    it 'does not allow user to login with invalid twilio_verify token', :vcr do
       visit new_user_session_path
 
       fill_in 'user_email', with: user.email
       fill_in 'user_password', with: password
       click_button 'Sign In'
-      fill_in 'authy-token', with: 'Not the authy token'
+      fill_in 'twilio_verify-token', with: 'Not the twilio_verify token'
       click_button 'Verify and Sign in'
       expect(page).to have_content('The entered token is invalid')
     end
 
-    it 'updates authy when updating an accounts mobile phone' do
+    it 'updates twilio_verify when updating an accounts mobile phone' do
       allow(Authy::API).to receive(:user_status).and_return(double(:response, ok?: false))
       allow(Authy::API).to receive(:register_user).and_return(double(:response, ok?: true, id: authy_id))
 

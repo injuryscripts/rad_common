@@ -9,7 +9,6 @@ module RadCommon
     require 'audited'
     require 'authtrail'
     require 'devise'
-    require 'devise-authy'
     require 'devise-security'
     require 'devise_invitable'
     require 'faker'
