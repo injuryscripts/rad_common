@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :lockable, :invitable,
-         :timeoutable, :password_archivable, :password_expirable, :secure_validatable, :expirable
+         :timeoutable, :password_archivable, :password_expirable, :secure_validatable, :expirable,
+         :twilio_verify_authenticatable
 
   include RadbearUser
 
