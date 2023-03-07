@@ -13,18 +13,10 @@ class RadicalTwilio
 
   def self.send_verify_sms(mobile_phone)
     response = RadicalRetry.perform_request(retry_count: 2, raise_original: true) do
-      new.verify_service.verifications.create(to: human_to_twilio_format(mobile_phone), channel: 'sms')
+      TwilioVerifyService.send_sms_token(mobile_phone)
     end
 
     response.status == 'pending'
-  end
-
-  def self.check_verify_sms(mobile_phone, code)
-    response = RadicalRetry.perform_request(retry_count: 2, raise_original: true) do
-      new.verify_service.verification_checks.create(to: human_to_twilio_format(mobile_phone), code: code)
-    end
-
-    response.status == 'approved'
   end
 
   def twilio_enabled?
@@ -63,10 +55,6 @@ class RadicalTwilio
 
   def self.twilio_to_human_format(phone_number)
     "(#{phone_number[2, 3]}) #{phone_number[5, 3]}-#{phone_number[8, 4]}"
-  end
-
-  def verify_service
-    client.verify.services(RadicalConfig.twilio_verify_service_sid!)
   end
 
   private
