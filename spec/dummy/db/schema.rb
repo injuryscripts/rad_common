@@ -341,7 +341,7 @@ ActiveRecord::Schema.define(version: 2023_02_22_162024) do
     t.string "global_search_default", limit: 255
     t.integer "user_status_id", null: false
     t.string "authy_id"
-    t.datetime "last_sign_in_with_authy"
+    t.datetime "last_sign_in_with_twilio_verify"
     t.boolean "twilio_verify_enabled", default: true, null: false
     t.string "invitation_token"
     t.datetime "invitation_created_at"
@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(version: 2023_02_22_162024) do
     t.datetime "expired_at"
     t.jsonb "filter_defaults"
     t.boolean "twilio_verify_sms", default: true, null: false
+    t.string "twilio_totp_factor_sid"
     t.index ["authy_id"], name: "index_users_on_authy_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
