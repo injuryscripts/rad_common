@@ -5,7 +5,7 @@
 Devise.setup do |config|
   # ==> Devise Twilio Verify Extension
   # How long should the user's device be remembered for.
-  config.twilio_verify_remember_device = 7.days
+  config.twilio_verify_remember_device = RadicalConfig.config_item!(:twilio_verify_remember_device)&.to_i&.minutes || 7.days
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
