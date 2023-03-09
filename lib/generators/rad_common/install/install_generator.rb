@@ -196,6 +196,7 @@ end
         apply_migration '20220901143808_sign_up_roles.rb'
         apply_migration '20220905140634_allow_invite_role.rb'
         apply_migration '20220918194026_refine_smarty.rb'
+        apply_migration '20230222162024_migrate_authy_to_twilio_verify.rb'
       end
 
       def self.next_migration_number(path)
