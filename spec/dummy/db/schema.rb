@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_22_162024) do
+ActiveRecord::Schema.define(version: 2023_03_24_202030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(version: 2023_02_22_162024) do
   create_table "twilio_logs", force: :cascade do |t|
     t.string "from_number", null: false
     t.string "to_number", null: false
-    t.integer "from_user_id", null: false
+    t.integer "from_user_id"
     t.integer "to_user_id"
     t.string "message", null: false
     t.string "media_url"
