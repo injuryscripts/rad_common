@@ -7,8 +7,16 @@ module Users
         else
           flash.now[:error] = 'The verification code failed to send. Please click "Resend Text".'
         end
+      end
 
-        super
+      super
+    end
+
+    private
+
+    def check_resource_not_twilio_verify_enabled
+      if @resource.twilio_verify_enabled?
+        redirect_to after_twilio_verify_verified_path_for(resource)
       end
     end
   end
