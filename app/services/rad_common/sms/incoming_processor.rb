@@ -18,6 +18,7 @@ module RadCommon
 
       def process
         @command_results = process_sms
+        log_sms!
         @sms_reply = @command_results.sms_reply
         return unless @command_results.reply
 
@@ -57,6 +58,12 @@ module RadCommon
 
         def cleanup_command(command)
           command.gsub(/["']/, '').upcase.strip
+        end
+
+        def log_sms!
+          TwilioLog.create! to_number: RadicalConfig.twilio_phone_number!,
+                            from_number: @phone_number,
+                            message: @incoming_message
         end
     end
   end
