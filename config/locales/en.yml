@@ -1,5 +1,6 @@
 en:
   communication_sms_opt_in: 'Your communication preferences have been changed, we will start sending you text message notifications.'
+  communication_mms_failure: 'Sorry we are unable to process your request please contact customer service for assistance.'
   activerecord:
     attributes:
       system_message:

@@ -8,7 +8,9 @@ module RadCommon
       COMMAND_PROCESSORS = [OptOut, OptIn].freeze
 
       def initialize(params)
+        @params = params
         @incoming_message = params[:Body]
+        @attachments = get_attachments
         @phone_number = Utilities.format_twilio_number(params[:From])
         @command_results = nil
         @sms_reply = nil
@@ -17,7 +19,7 @@ module RadCommon
       end
 
       def process
-        @command_results = process_sms
+        @command_results = mms? ? process_mms : process_sms
         log_sms!
         @sms_reply = @command_results.sms_reply
         return unless @command_results.reply
@@ -38,6 +40,19 @@ module RadCommon
           end
 
           CommandResults.new(command_matched: false, incoming_message: @incoming_message)
+        end
+
+        def process_mms
+          log_mms!
+
+          CommandResults.new sms_reply: (@log.persisted? ? nil : translate_reply(:communication_mms_failure)),
+                             reply: @log.new_record?,
+                             incoming_message: @incoming_message.presence || 'MMS',
+                             command_matched: false
+        end
+
+        def mms?
+          @params['MessageSid']&.starts_with? 'M'
         end
 
         def sms_users
@@ -61,9 +76,35 @@ module RadCommon
         end
 
         def log_sms!
-          TwilioLog.create! to_number: RadicalConfig.twilio_phone_number!,
-                            from_number: @phone_number,
-                            message: @incoming_message
+          return if mms?
+
+          @log = TwilioLog.create! to_number: RadicalConfig.twilio_phone_number!,
+                                   from_number: @phone_number,
+                                   message: @incoming_message
+        end
+
+        def get_attachments
+          return [] unless mms?
+
+          (0..(@params['NumMedia'].to_i - 1)).map do |counter|
+            RadicalRetry.perform_request(retry_count: 2) do
+              URI.open(@params["MediaUrl#{counter}"])
+            end
+          end.compact
+        end
+
+        def log_mms!
+          return if @attachments.blank?
+
+          @log = TwilioLog.new to_number: RadicalConfig.twilio_phone_number!,
+                               from_number: @phone_number,
+                               message: @incoming_message.presence || 'MMS'
+
+          @attachments.each do |file|
+            @log.attachments.attach io: file, filename: File.basename(file.path)
+          end
+
+          @log.tap(&:save)
         end
     end
   end
