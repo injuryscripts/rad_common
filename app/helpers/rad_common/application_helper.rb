@@ -92,6 +92,12 @@ module RadCommon
       end
     end
 
+    def format_state(abbreviation)
+      return if abbreviation.blank?
+
+      StateOptions.full_name(abbreviation)
+    end
+
     def formatted_decimal_hours(total_minutes)
       return if total_minutes.blank?
 
