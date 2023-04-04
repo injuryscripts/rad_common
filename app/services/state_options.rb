@@ -55,6 +55,10 @@ class StateOptions
   }.freeze
 
   class << self
+    def abbreviations
+      active_states.values
+    end
+
     def options
       active_states.map { |state, abbreviation| [state, abbreviation] }
     end
