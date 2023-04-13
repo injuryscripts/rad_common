@@ -2,11 +2,15 @@ module RadCommon
   module ApplicationHelper
     ALERT_TYPES = %i[success info warning danger].freeze unless const_defined?(:ALERT_TYPES)
 
-    def secured_link(resource, format: nil)
+    def secured_link(resource, format: nil, new_tab: false)
       return unless resource
 
       if Pundit.policy!(current_user, resource).show?
-        link_to(resource_name(resource), resource, format: format)
+        if new_tab
+          link_to resource_name(resource), resource, format: format, target: '_blank', rel: 'noopener'
+        else
+          link_to resource_name(resource), resource, format: format
+        end
       else
         resource_name(resource)
       end
