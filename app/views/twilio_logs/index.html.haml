@@ -19,7 +19,9 @@
             = twilio_log.message
             - twilio_log.attachments.each do |attachment|
               .mb-1= image_tag attachment, class: 'mms-content'
-          %td= twilio_log.media_url
+          %td
+            - if twilio_log.media_url.present?
+              = link_to twilio_log.media_url, twilio_log.media_url, target: '_blank', rel: 'noopener'
           %td= format_boolean twilio_log.opt_out_message_sent
           %td= format_boolean twilio_log.success
 

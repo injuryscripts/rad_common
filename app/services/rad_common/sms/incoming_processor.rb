@@ -46,7 +46,7 @@ module RadCommon
           log_mms!
 
           CommandResults.new sms_reply: (@log.persisted? ? nil : translate_reply(:communication_mms_failure)),
-                             reply: @log.new_record?,
+                             reply: !@log.attachments.attached?,
                              incoming_message: @incoming_message.presence || 'MMS',
                              command_matched: false
         end
