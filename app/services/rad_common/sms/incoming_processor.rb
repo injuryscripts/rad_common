@@ -108,8 +108,10 @@ module RadCommon
             @log.attachments.attach io: file, filename: File.basename(file.path)
           end
 
-          @log.attachments = [] if @log.errors.messages.has_key?(:attachments)
-          @log.tap(&:save)
+          unless @log.save
+            @log.attachments = [] if @log.errors.messages.has_key?(:attachments)
+            @log.save
+          end
           Rails.logger.info "log errors #{@log.errors.full_messages.join(', ')}"
           @log
         end
