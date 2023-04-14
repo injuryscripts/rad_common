@@ -106,6 +106,11 @@ module RadCommon
 
           @log.tap(&:save)
         end
+
+        def translate_reply(sms_reply_key, params = {})
+          params.merge!(locale: locale)
+          I18n.t(sms_reply_key, **params)
+        end
     end
   end
 end
