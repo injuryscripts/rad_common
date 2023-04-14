@@ -101,9 +101,13 @@ module RadCommon
                                message: @incoming_message.presence || 'MMS'
 
           @attachments.each do |file|
+            @log.media_url = file.base_uri.to_s
+            next unless file.respond_to? :path
+
             @log.attachments.attach io: file, filename: File.basename(file.path)
           end
 
+          @log.attachments = [] if @log.errors.messages.has_key?(:attachments)
           @log.tap(&:save)
         end
 
