@@ -45,8 +45,8 @@ module RadCommon
         def process_mms
           log_mms!
 
-          CommandResults.new sms_reply: (@log.attachments.attached? ? nil : translate_reply(:communication_mms_failure)),
-                             reply: !@log.attachments.attached?,
+          CommandResults.new sms_reply: (@log.media_url.blank? ? translate_reply(:communication_mms_failure) : nil),
+                             reply: true,
                              incoming_message: @incoming_message.presence || 'MMS',
                              command_matched: false
         end
@@ -94,7 +94,6 @@ module RadCommon
         end
 
         def log_mms!
-          Rails.logger.info "log attachment count: #{@attachments.count}"
           return if @attachments.blank?
 
           @log = TwilioLog.new to_number: RadicalConfig.twilio_phone_number!,
@@ -112,7 +111,7 @@ module RadCommon
             @log.attachments = [] if @log.errors.messages.has_key?(:attachments)
             @log.save
           end
-          Rails.logger.info "log errors #{@log.errors.full_messages.join(', ')}"
+
           @log
         end
 
