@@ -15,10 +15,17 @@
           %td
             %p= format_datetime(notification.created_at)
             %p #{distance_of_time_in_words_to_now(notification.created_at)} ago
-          %td= sanitize notification.content
+          %td
+            = sanitize notification.content
+            - if notification.record.present? && notification.record.is_a?(TwilioLog)
+              - notification.record.attachments.each do |attachment|
+                .my-1= image_tag attachment, class: 'mms-content'
           %td
             - if notification.record.present?
-              %p= secured_link(notification.record)
+              - if notification.record.is_a?(TwilioLog) && notification.record.media_url.present?
+                = link_to notification.record.media_url, notification.record.media_url, target: '_blank', rel: 'noopener'
+              - else
+                %p= secured_link notification.record, new_tab: true
 
     -# see kaminari monkey patch on initializers/rad_common.rb
     = paginate @notifications, theme: 'twitter-bootstrap-4', routes_proxy: rad_common_engine
