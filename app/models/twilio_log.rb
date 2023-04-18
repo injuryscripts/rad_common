@@ -8,8 +8,6 @@ class TwilioLog < ApplicationRecord
 
   has_many_attached :attachments
 
-  validates :attachments
-
   def self.opt_out_message_sent?(to_number)
     TwilioLog.where(success: true, opt_out_message_sent: true, to_number: to_number).limit(1).any?
   end
