@@ -5,7 +5,7 @@
   - record.send(attachment_name).each_with_index do |attachment, index|
     .attachment-wrapper
       - if show_images && attachment.content_type.include?('image')
-        = link_to image_tag(attachment, class: 'img-fluid rounded attachment-content'),
+        = link_to image_tag(attachment, class: 'attachment-content'),
                   url_for(attachment),
                   class: 'text-wrap',
                   target: '_blank',
