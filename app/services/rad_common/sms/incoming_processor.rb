@@ -88,7 +88,8 @@ module RadCommon
 
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
             RadicalRetry.perform_request(retry_count: 2) do
-              URI.open(@params["MediaUrl#{counter}"])
+              { url: @params["MediaUrl#{counter}"],
+                file: URI.open(@params["MediaUrl#{counter}"]) }
             end
           end.compact
         end
@@ -100,11 +101,12 @@ module RadCommon
                                from_number: @phone_number,
                                message: @incoming_message.presence || 'MMS'
 
-          @attachments.each do |file|
-            @log.media_url = file.base_uri.to_s
-            next unless file.respond_to? :path
+          @attachments.each do |attachment|
+            @log.media_url = attachment[:url]
+            next unless attachment[:file].respond_to? :path
 
-            @log.attachments.attach io: file, filename: File.basename(file.path)
+            @log.attachments.attach io: attachment[:file],
+                                    filename: File.basename(attachment[:file].path)
           end
 
           unless @log.save
