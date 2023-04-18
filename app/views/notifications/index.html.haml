@@ -18,12 +18,11 @@
           %td
             = sanitize notification.content
             - if notification.record.present? && notification.record.is_a?(TwilioLog)
-              - notification.record.attachments.each do |attachment|
-                .my-1= image_tag attachment, class: 'mms-content'
+              .mb-3= render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: true, show_links: false
           %td
             - if notification.record.present?
-              - if notification.record.is_a?(TwilioLog) && notification.record.media_url.present?
-                = link_to notification.record.media_url, notification.record.media_url, target: '_blank', rel: 'noopener'
+              - if notification.record.is_a?(TwilioLog)
+                = render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: false, show_links: true
               - else
                 %p= secured_link notification.record, new_tab: true
 

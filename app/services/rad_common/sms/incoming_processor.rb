@@ -45,7 +45,7 @@ module RadCommon
         def process_mms
           log_mms!
 
-          CommandResults.new sms_reply: (@log.media_url.blank? ? translate_reply(:communication_mms_failure) : nil),
+          CommandResults.new sms_reply: (@log.attachments.attached? ? nil : translate_reply(:communication_mms_failure)),
                              reply: true,
                              incoming_message: @incoming_message.presence || 'MMS',
                              command_matched: false

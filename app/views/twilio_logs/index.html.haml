@@ -17,11 +17,12 @@
           %td= secured_link twilio_log.to_user
           %td
             = twilio_log.message
-            - twilio_log.attachments.each do |attachment|
-              .mb-1= image_tag attachment, class: 'mms-content'
+            .mb-3= render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: true, show_links: false
           %td
             - if twilio_log.media_url.present?
               = link_to twilio_log.media_url, twilio_log.media_url, target: '_blank', rel: 'noopener'
+            - else
+              = render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: false, show_links: true
           %td= format_boolean twilio_log.opt_out_message_sent
           %td= format_boolean twilio_log.success
 
