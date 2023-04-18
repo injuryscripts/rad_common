@@ -19,10 +19,10 @@
             = twilio_log.message
             .mb-3= render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: true, show_links: false
           %td
-            - if twilio_log.media_url.present?
-              = link_to twilio_log.media_url, twilio_log.media_url, target: '_blank', rel: 'noopener'
-            - else
+            - if twilio_log.attachments.attached?
               = render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: false, show_links: true
+            - elsif twilio_log.media_url.present?
+              = link_to twilio_log.media_url, twilio_log.media_url, target: '_blank', rel: 'noopener'
           %td= format_boolean twilio_log.opt_out_message_sent
           %td= format_boolean twilio_log.success
 
