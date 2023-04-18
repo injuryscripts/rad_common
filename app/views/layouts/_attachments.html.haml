@@ -3,7 +3,7 @@
 
 - if record.persisted? && record.send(attachment_name).attached?
   - record.send(attachment_name).each_with_index do |attachment, index|
-    .attachment-wrapper
+    .attachment-wrapper.mt-1
       - if show_images && attachment.content_type.include?('image')
         = link_to image_tag(attachment, class: 'attachment-content'),
                   url_for(attachment),

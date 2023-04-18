@@ -18,11 +18,11 @@
           %td
             = sanitize notification.content
             - if notification.record.present? && notification.record.is_a?(TwilioLog)
-              .mb-3= render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: true, show_links: false
+              .mb-3= render 'layouts/attachments', record: notification.record, attachment_name: :attachments, show_images: true, show_links: false
           %td
             - if notification.record.present?
               - if notification.record.is_a?(TwilioLog)
-                = render 'layouts/attachments', record: twilio_log, attachment_name: :attachments, show_images: false, show_links: true
+                = render 'layouts/attachments', record: notification.record, attachment_name: :attachments, show_images: false, show_links: true
               - else
                 %p= secured_link notification.record, new_tab: true
 
