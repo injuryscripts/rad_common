@@ -87,6 +87,7 @@ module RadCommon
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
             RadicalRetry.perform_request(retry_count: 2) do
               { url: @params["MediaUrl#{counter}"],
+                content_type: @params["MediaContentType#{counter}"],
                 file: URI.open(@params["MediaUrl#{counter}"]) }
             end
           end.compact
@@ -104,6 +105,7 @@ module RadCommon
             next unless attachment[:file].respond_to? :path
 
             @log.attachments.attach io: attachment[:file],
+                                    content_type: attachment[:content_type],
                                     filename: File.basename(attachment[:file].path)
           end
 
