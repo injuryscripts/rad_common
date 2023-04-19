@@ -111,6 +111,7 @@ module RadCommon
             @log.media_url = attachment[:url]
             @log.attachments.attach io: attachment[:file],
                                     content_type: attachment[:content_type],
+                                    identify: false,
                                     filename: attachment[:filename]
           end
 
