@@ -1,5 +1,5 @@
-- show_links ||= true
-- show_images ||= true
+- show_links = defined?(show_links) ? show_links : true
+- show_images = defined?(show_images) ? show_images : true
 
 - if record.persisted? && record.send(attachment_name).attached?
   - record.send(attachment_name).each_with_index do |attachment, index|
