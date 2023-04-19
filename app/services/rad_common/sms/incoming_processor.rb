@@ -86,9 +86,16 @@ module RadCommon
 
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
             RadicalRetry.perform_request(retry_count: 2) do
+              file = URI.open(@params["MediaUrl#{counter}"])
+              if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
+                filename = file.meta['content-disposition'].split('"').last.strip.presence
+              end
+              filename ||= File.basename(file.path)
+
               { url: @params["MediaUrl#{counter}"],
                 content_type: @params["MediaContentType#{counter}"],
-                file: URI.open(@params["MediaUrl#{counter}"]) }
+                filename: filename,
+                file: file }
             end
           end.compact
         end
@@ -102,11 +109,9 @@ module RadCommon
 
           @attachments.each do |attachment|
             @log.media_url = attachment[:url]
-            next unless attachment[:file].respond_to? :path
-
             @log.attachments.attach io: attachment[:file],
                                     content_type: attachment[:content_type],
-                                    filename: File.basename(attachment[:file].path)
+                                    filename: attachment[:filename]
           end
 
           unless @log.save
