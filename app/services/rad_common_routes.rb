@@ -21,8 +21,6 @@ module RadCommonRoutes
             put :reactivate
             put :test_email
             put :test_sms
-            get :setup_totp
-            put :register_totp
           end
 
           resources :user_clients, only: :new
@@ -38,6 +36,13 @@ module RadCommonRoutes
 
       authenticate :user, ->(u) { u.admin? } do
         mount Sidekiq::Web => '/sidekiq'
+      end
+
+      resources :users, only: [] do
+        member do
+          get :setup_totp
+          put :register_totp
+        end
       end
 
       resources :user_profiles, only: %i[show edit update] if RadicalConfig.user_profiles?
