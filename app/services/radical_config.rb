@@ -133,7 +133,7 @@ class RadicalConfig
     end
 
     def twilio_mms_phone_number!
-      secret_config_item! :twilio_mms_phone_number
+      secret_config_item(:twilio_mms_phone_number).presence || twilio_phone_number!
     end
 
     def twilio_account_sid!

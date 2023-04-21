@@ -11,4 +11,11 @@ class TwilioLog < ApplicationRecord
   def self.opt_out_message_sent?(to_number)
     TwilioLog.where(success: true, opt_out_message_sent: true, to_number: to_number).limit(1).any?
   end
+
+  def media_url_image?
+    return false if media_url.blank?
+
+    RadCommon::VALID_IMAGE_TYPES.map { |type| type.delete_prefix('image/') }
+                                .any? { |type| media_url.ends_with?(type) }
+  end
 end

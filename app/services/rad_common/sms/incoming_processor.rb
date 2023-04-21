@@ -85,18 +85,17 @@ module RadCommon
           return [] unless mms?
 
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
-            RadicalRetry.perform_request(retry_count: 2) do
-              file = URI.open(@params["MediaUrl#{counter}"])
-              if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
-                filename = file.meta['content-disposition'].split('"').last.strip.presence
-              end
-              filename ||= File.basename(file.path)
+            file = RadicalRetry.perform_request(retry_count: 2) { URI.open(@params["MediaUrl#{counter}"]) }
+            filename = if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
+                         file.meta['content-disposition'].split('"').last.strip.presence
+                       else
+                         File.basename(file.path)
+                       end
 
-              { url: @params["MediaUrl#{counter}"],
-                content_type: @params["MediaContentType#{counter}"],
-                filename: filename,
-                file: file }
-            end
+            { url: @params["MediaUrl#{counter}"],
+              content_type: @params["MediaContentType#{counter}"],
+              filename: filename,
+              file: file }
           end.compact
         end
 

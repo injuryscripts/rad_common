@@ -2,7 +2,7 @@ class PhoneSMSSender
   OPT_OUT_MESSAGE = 'To no longer receive text messages, text STOP'.freeze
 
   attr_accessor :message, :from_user_id, :to_mobile_phone, :to_user, :media_url, :twilio, :opt_out_message_sent,
-                :exception
+                :exception, :log
 
   def initialize(message, from_user_id, to_mobile_phone, media_url, force_opt_out)
     raise "The message from user #{from_user_id} failed: the message is blank." if message.blank?
@@ -75,13 +75,27 @@ class PhoneSMSSender
     end
 
     def log_event(success)
-      TwilioLog.create! to_number: to_number,
-                        from_number: from_number,
-                        to_user: to_user,
-                        from_user_id: from_user_id,
-                        message: message,
-                        media_url: media_url,
-                        success: success,
-                        opt_out_message_sent: opt_out_message_sent
+      @log = TwilioLog.create! to_number: to_number,
+                               from_number: from_number,
+                               to_user: to_user,
+                               from_user_id: from_user_id,
+                               message: message,
+                               media_url: media_url,
+                               success: success,
+                               opt_out_message_sent: opt_out_message_sent
+
+      return if @log.media_url.blank?
+
+      file = RadicalRetry.perform_request(retry_count: 2) { URI.open(@log.media_url) }
+      filename = if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
+                   file.meta['content-disposition'].split('"').last.strip.presence
+                 else
+                   File.basename(file.path)
+                 end
+
+      @log.attachments.attach io: file,
+                              content_type: file.content_type,
+                              identify: false,
+                              filename: filename
     end
 end
