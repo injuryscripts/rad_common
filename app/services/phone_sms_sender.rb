@@ -88,7 +88,7 @@ class PhoneSMSSender
 
       file = RadicalRetry.perform_request(retry_count: 2) { URI.open(@log.media_url) }
       filename = if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
-                   file.meta['content-disposition'].split('"').last.strip.presence
+                   file.meta['content-disposition'].match(/filename="[^"]+"/).to_s.gsub(/filename=|"/, '')
                  else
                    File.basename(file.path)
                  end

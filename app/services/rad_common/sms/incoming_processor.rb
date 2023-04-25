@@ -87,7 +87,7 @@ module RadCommon
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
             file = RadicalRetry.perform_request(retry_count: 2) { URI.open(@params["MediaUrl#{counter}"]) }
             filename = if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
-                         file.meta['content-disposition'].split('"').last.strip.presence
+                         file.meta['content-disposition'].match(/filename="[^"]+"/).to_s.gsub(/filename=|"/, '')
                        else
                          File.basename(file.path)
                        end
