@@ -82,7 +82,7 @@ module RadCommon
         end
 
         def get_attachments
-          return [] unless mms?
+          return [] unless mms? && @params['NumMedia'].to_i.positive?
 
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
             file = RadicalRetry.perform_request(retry_count: 2) { URI.open(@params["MediaUrl#{counter}"]) }
@@ -100,8 +100,6 @@ module RadCommon
         end
 
         def log_mms!
-          return if @attachments.blank?
-
           @log = TwilioLog.new to_number: RadicalConfig.twilio_phone_number!,
                                from_number: @phone_number,
                                message: @incoming_message.presence || 'MMS'
