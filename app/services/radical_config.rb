@@ -148,6 +148,13 @@ class RadicalConfig
       secret_config_item! :twilio_verify_service_sid
     end
 
+
+    # Config item should be in sync with countries enabled for messaging in twilio account
+    # https://console.twilio.com/us1/develop/sms/settings/geo-permissions
+    def twilio_countries_enabled!
+      config_item!(:twilio_countries_enabled).split(' ')
+    end
+
     def seeded_users!
       raise 'missing seeded_users config' if Rails.application.credentials.seeded_users.blank?
 

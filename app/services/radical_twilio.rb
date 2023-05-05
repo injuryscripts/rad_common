@@ -50,7 +50,12 @@ class RadicalTwilio
 
     begin
       response = get_phone_number(phone_number, mobile)
-      return 'does not appear to be a valid mobile phone number' if mobile && response.carrier['type'] != 'mobile'
+
+      if mobile && response.carrier['type'] != 'mobile'
+        return 'does not appear to be a valid mobile phone number'
+      elsif mobile && !response.country_code.in?(RadicalConfig.twilio_countries_enabled!)
+        return 'country is not supported'
+      end
 
       response.phone_number
     rescue Twilio::REST::RestError, NoMethodError => e
