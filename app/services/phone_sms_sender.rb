@@ -28,7 +28,7 @@ class PhoneSMSSender
     true
   rescue Twilio::REST::RestError => e
     self.exception = e
-    raise e.message unless blacklisted?
+    raise e.message unless blacklisted? || unsupported_country?
 
     log_event false
     handle_blacklist
@@ -37,6 +37,17 @@ class PhoneSMSSender
 
   def from_number
     mms? ? twilio.from_number_mms : twilio.from_number
+  end
+
+
+  def blacklisted?
+    # https://www.twilio.com/docs/api/errors/21610
+    exception.message.include?('21610')
+  end
+
+  def unsupported_country?
+    # https://www.twilio.com/docs/api/errors/21408
+    exception.message.include? '21408'
   end
 
   private
@@ -63,11 +74,6 @@ class PhoneSMSSender
 
     def to_number
       RadicalTwilio.human_to_twilio_format(to_mobile_phone)
-    end
-
-    def blacklisted?
-      # https://www.twilio.com/docs/api/errors/21610
-      exception.message.include?('21610')
     end
 
     def opt_out_message_already_sent?
