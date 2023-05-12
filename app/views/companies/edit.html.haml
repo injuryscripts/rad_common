@@ -8,6 +8,6 @@
 
   .card-body
     = simple_form_for(@company, url: '/rad_common/company/update', method: :put) do |f|
-      = f.error_notification message: "#{t('simple_form.error_notification.default_message')} #{@company.errors.full_messages.join('. ')}"
+      = form_errors_alert(f)
 
       = render 'companies/form', f: f

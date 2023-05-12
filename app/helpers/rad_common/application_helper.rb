@@ -168,6 +168,11 @@ module RadCommon
       form.error :base, class: 'alert alert-danger' if form.object.errors[:base].present?
     end
 
+    def form_errors_alert(form)
+      form.error_notification message: "#{I18n.t('simple_form.error_notification.default_message')} " \
+                                       "#{form.object.errors.full_messages.join('. ')}"
+    end
+
     def icon(icon, text = nil, options = {})
       text_class = text.present? ? 'mr-2' : nil
       capture do
