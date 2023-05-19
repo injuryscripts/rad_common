@@ -3,7 +3,7 @@ require 'mail'
 class RadicalConfig
   class << self
     def admin_email!
-      secret_config_item! :admin_email
+      config_item! :admin_email
     end
 
     def admin_email_address!
@@ -11,7 +11,7 @@ class RadicalConfig
     end
 
     def from_email!
-      secret_config_item! :from_email
+      config_item! :from_email
     end
 
     def smtp_username!
