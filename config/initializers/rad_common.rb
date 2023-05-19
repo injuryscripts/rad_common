@@ -15,27 +15,29 @@ ActiveRecord::Base.prepend CoreExtensions::ActiveRecord::Base::SchemaValidations
 Rails.application.config.rad_common = Rails.application.config_for(:rad_common)
 Rails.application.config.assets.precompile += %w[rad_common/radbear_mailer.css rad_common/radbear_mailer_reset.css]
 
-#RadicalConfig.check_validity!
+unless ENV['SKIP_RADCOMMON_SETUP']
+  RadicalConfig.check_validity!
 
-Rails.application.routes.default_url_options[:host] = RadicalConfig.host_name!
+  Rails.application.routes.default_url_options[:host] = RadicalConfig.host_name!
 
-if Rails.env.staging? || Rails.env.production?
-  Rails.application.config.action_mailer.delivery_method = :smtp
-  Rails.application.config.action_mailer.perform_deliveries = true
-  Rails.application.config.action_mailer.default charset: 'utf-8'
-  Rails.application.config.action_mailer.asset_host = "https://#{RadicalConfig.host_name!}"
+  if Rails.env.staging? || Rails.env.production?
+    Rails.application.config.action_mailer.delivery_method = :smtp
+    Rails.application.config.action_mailer.perform_deliveries = true
+    Rails.application.config.action_mailer.default charset: 'utf-8'
+    Rails.application.config.action_mailer.asset_host = "https://#{RadicalConfig.host_name!}"
 
-  Rails.application.config.action_mailer.smtp_settings = {
-    address: RadicalConfig.smtp_address!,
-    port: RadicalConfig.smtp_port!,
-    enable_starttls_auto: RadicalConfig.smtp_enable_starttls_auto!,
-    domain: RadicalConfig.smtp_domain!,
-    authentication: RadicalConfig.smtp_authentication!,
-    user_name: RadicalConfig.smtp_username!,
-    password: RadicalConfig.smtp_password!
-  }
-else
-  Rails.application.config.action_mailer.asset_host = 'http://localhost:3000'
+    Rails.application.config.action_mailer.smtp_settings = {
+      address: RadicalConfig.smtp_address!,
+      port: RadicalConfig.smtp_port!,
+      enable_starttls_auto: RadicalConfig.smtp_enable_starttls_auto!,
+      domain: RadicalConfig.smtp_domain!,
+      authentication: RadicalConfig.smtp_authentication!,
+      user_name: RadicalConfig.smtp_username!,
+      password: RadicalConfig.smtp_password!
+    }
+  else
+    Rails.application.config.action_mailer.asset_host = 'http://localhost:3000'
+  end
 end
 
 if Rails.env.staging?
