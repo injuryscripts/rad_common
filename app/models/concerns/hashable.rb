@@ -2,6 +2,8 @@ module Hashable
   extend ActiveSupport::Concern
 
   def encoded_id
+    return if id.nil?
+
     Hashable.hashids.encode(id)
   end
 
