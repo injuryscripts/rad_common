@@ -1,6 +1,7 @@
 default: &default
   app_name: Demo Foo
   portal_app_name: Foo Portal
+  language_code: en
   use_avatar: true
   disable_sign_up: false
   disable_invite: false
