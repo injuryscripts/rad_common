@@ -85,7 +85,10 @@ module RadCommon
           return [] unless mms? && @params['NumMedia'].to_i.positive?
 
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
-            file = RadicalRetry.perform_request(retry_count: 2) { URI.open(@params["MediaUrl#{counter}"]) }
+            file = RadicalRetry.perform_request(retry_count: 2) do
+              URI.open(@params["MediaUrl#{counter}"], http_basic_authentication: [RadicalConfig.twilio_account_sid!,
+                                                                                  RadicalConfig.twilio_auth_token!])
+            end
             filename = if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
                          file.meta['content-disposition'].match(/filename="[^"]+"/).to_s.gsub(/filename=|"/, '')
                        else

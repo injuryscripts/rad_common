@@ -2,6 +2,10 @@ require 'mail'
 
 class RadicalConfig
   class << self
+    def default_language_code!
+      config_item! :language_code
+    end
+
     def admin_email!
       config_item! :admin_email
     end
