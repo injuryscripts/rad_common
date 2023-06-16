@@ -8,6 +8,7 @@ module RadCommon
     require 'active_storage_validations'
     require 'audited'
     require 'authtrail'
+    require 'aws-sdk-rails'
     require 'devise'
     require 'devise-twilio-verify'
     require 'devise-security'
