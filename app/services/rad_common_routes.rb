@@ -34,10 +34,6 @@ module RadCommonRoutes
         resources :user_clients, only: %i[create destroy]
       end
 
-      authenticate :user, ->(u) { u.admin? } do
-        mount Sidekiq::Web => '/sidekiq'
-      end
-
       resources :users, only: [] do
         member do
           get :setup_totp

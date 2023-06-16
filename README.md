@@ -36,7 +36,7 @@ To install rad_common, you must run the generator:
 
 This will then create the initializer in the /config/initializers directory with the default values set within the generator template as well as copy all the files to the project.
 
-Emails are sent in the background so make sure you have a mailers queue running in sidekiq.
+Emails are sent in the background so make sure you have a mailers queue running in SQS.
 
 ## Email Template
 To use the common email template in your Rails project, just have your mailer subclass RadbearMailer.

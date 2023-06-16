@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'audited'
   s.add_dependency 'authtrail'
 
+  s.add_dependency 'aws-sdk-rails'
   s.add_dependency 'aws-sdk-s3'
   s.add_dependency 'bootstrap4-kaminari-views', '~> 1.0.1'
   s.add_dependency 'devise'
@@ -56,8 +57,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'sendgrid-ruby'
   s.add_dependency 'sentry-rails'
   s.add_dependency 'sentry-ruby'
-  s.add_dependency 'sidekiq', '~> 6.4.1'
-  s.add_dependency 'sidekiq-failures'
   s.add_dependency 'simple_form', '~> 5.0'
   s.add_dependency 'smartystreets_ruby_sdk'
   s.add_dependency 'strip_attributes'

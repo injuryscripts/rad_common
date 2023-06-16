@@ -57,9 +57,7 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-  config.active_job.queue_adapter = :sidekiq
-  require 'sidekiq/testing'
-  Sidekiq::Testing.inline!
+  config.active_job.queue_adapter = :inline
 
   unless ENV['RAILS_ENABLE_TEST_LOG']
     config.logger = Logger.new(nil)

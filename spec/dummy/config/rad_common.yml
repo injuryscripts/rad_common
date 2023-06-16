@@ -19,6 +19,7 @@ default: &default
   twilio_verify_remember_device: 120 # minutes
   twilio_countries_enabled: 'US'
   shared_database: false
+  background_jobs_url: https://us-east-1.console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues
 
   system_usage_models:
     -

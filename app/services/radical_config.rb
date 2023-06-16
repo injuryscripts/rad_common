@@ -273,6 +273,14 @@ class RadicalConfig
       boolean_config_item! :secure_sentry
     end
 
+    def background_jobs_url!
+      config_item! :background_jobs_url
+    end
+
+    def sqs_queue_url!(queue_name)
+      secret_config_item! "sqs_queue_#{queue_name}".to_sym
+    end
+
     def s3_access_key_id!
       secret_config_item! :s3_access_key_id
     end

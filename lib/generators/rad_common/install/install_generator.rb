@@ -26,6 +26,7 @@ module RadCommon
 
         # config
         copy_file '../../../../../spec/dummy/config/storage.yml', 'config/storage.yml'
+        copy_file '../../../../../spec/dummy/config/aws_sqs_active_job.yml', 'config/aws_sqs_active_job.yml'
         copy_file '../../../../../spec/dummy/config/webpacker.yml', 'config/webpacker.yml'
         directory '../../../../../spec/dummy/config/environments/', 'config/environments/'
         directory '../../../../../spec/dummy/config/webpack/', 'config/webpack/'

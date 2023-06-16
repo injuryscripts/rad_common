@@ -1,0 +1,6 @@
+queues:
+  default: <%= RadicalConfig.sqs_queue_url!(:default) %>
+  mailers: <%= RadicalConfig.sqs_!queue_url!(:mailers) %>
+  sms: <%= RadicalConfig.sqs_!queue_url!(:sms) %>
+  active_storage_analysis: <%= RadicalConfig.sqs_!queue_url!(:active_storage_analysis) %>
+  active_storage_purge: <%= RadicalConfig.sqs_!queue_url!(:active_storage_purge) %>
