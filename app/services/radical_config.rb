@@ -278,7 +278,9 @@ class RadicalConfig
     end
 
     def sqs_queue_url!(queue_name)
-      if ENV['COPILOT_TOPIC_QUEUE_URIS'].present?
+      if ENV['COPILOT_QUEUE_URI'].present?
+        ENV['COPILOT_QUEUE_URI']
+      elsif ENV['COPILOT_TOPIC_QUEUE_URIS'].present?
         JSON.parse(ENV['COPILOT_TOPIC_QUEUE_URIS']).values.first
       else
         secret_config_item("sqs_queue_#{queue_name}".to_sym)
