@@ -27,27 +27,25 @@ class RadicalConfig
     end
 
     def smtp_address!
-      override_variable(:smtp_address) || 'smtp.sendgrid.net'
+      secret_config_item(:smtp_address) || 'smtp.sendgrid.net'
     end
 
     def smtp_port!
-      override_variable(:smtp_port) || 587
+      secret_config_item(:smtp_port) || 587
     end
 
     def smtp_enable_starttls_auto!
-      if boolean_override_variable_present?(:smtp_enable_starttls_auto)
-        return boolean_override_variable(:smtp_enable_starttls_auto)
-      end
+      return true if secret_config_item(:smtp_enable_starttls_auto).blank?
 
-      true
+      boolean_config_item!(:smtp_enable_starttls_auto)
     end
 
     def smtp_domain!
-      override_variable(:smtp_domain) || 'sendgrid.com'
+      secret_config_item(:smtp_domain) || 'sendgrid.com'
     end
 
     def smtp_authentication!
-      override_variable(:smtp_authentication) || 'plain'
+      secret_config_item(:smtp_authentication) || 'plain'
     end
 
     def sendgrid_api?
