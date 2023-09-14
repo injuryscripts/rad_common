@@ -8,7 +8,7 @@
       = render 'layouts/filter', search: @audit_search, path: '/rad_common/audits'
     - if @audits.size.positive? || @show_search
       = paginate @audits, theme: 'twitter-bootstrap-4', routes_proxy: rad_common_engine
-      %table.table.table-striped.table-bordered
+      %table.table.table-striped.table-bordered#audits-table
         %tr
           - if @show_search
             = render 'layouts/sort_headers', search: @audit_search
