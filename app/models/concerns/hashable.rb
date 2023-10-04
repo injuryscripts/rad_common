@@ -12,9 +12,11 @@ module Hashable
   end
 
   class_methods do
-    def find_decoded(encoded_id)
+    def find_decoded(encoded_id, col = :id)
       ids = Hashable.hashids.decode(encoded_id)
-      find(ids[0]) if ids && ids.count == 1 && ids[0]
+      return unless ids && ids.count == 1 && ids[0]
+
+      col == :id ? find(ids[0]) : find_by(col => ids[0])
     end
   end
 end
