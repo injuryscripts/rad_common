@@ -27,10 +27,10 @@ class PhoneSMSSender
     log_event true
     true
   rescue Twilio::REST::RestError => e
+    log_event false
     self.exception = e
     raise e.message unless blacklisted? || unsupported_country?
 
-    log_event false
     handle_blacklist
     false
   end
