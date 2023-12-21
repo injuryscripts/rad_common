@@ -20,7 +20,7 @@ module Hashable
       begin
         ids = Hashable.hashids.decode encoded_id
       rescue Hashids::InputError => e
-        raise e if col = :id
+        raise e if col == :id
         ids = []
       end
 
