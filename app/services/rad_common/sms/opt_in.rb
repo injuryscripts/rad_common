@@ -13,7 +13,7 @@ module RadCommon
       end
 
       def self.codes
-        ['START', 'UNSTOP', 'YES']
+        ['START', 'UNSTOP']
       end
     end
   end
