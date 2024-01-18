@@ -90,9 +90,9 @@ module RadCommon
 
     def format_boolean(value)
       if value
-        tag.div(nil, class: 'fa fa-check')
+        tag.div(nil, class: 'fa fa-check', 'aria-label' => true)
       else
-        tag.div(nil, class: 'fa fa-regular fa-circle')
+        tag.div(nil, class: 'fa fa-regular fa-circle', 'aria-label' => false)
       end
     end
 
