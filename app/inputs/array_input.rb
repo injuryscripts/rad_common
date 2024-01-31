@@ -3,8 +3,7 @@
 class ArrayInput < SimpleForm::Inputs::StringInput
   def input(_wrapper_options)
     input_html_options[:type] ||= input_type
-
-    array_elements = _wrapper_options.has_key?(:collection) ? _wrapper_options[:collection] : object.public_send(attribute_name)
+    array_elements = options[:collection].presence || object.public_send(attribute_name)
     array_elements = [] << '' if array_elements.blank?
     html = Array(array_elements).map { |array_el|
       @builder.text_field(nil, input_html_options.merge(value: array_el, name: "#{object_name}[#{attribute_name}][]"))
