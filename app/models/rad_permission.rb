@@ -10,7 +10,7 @@ class RadPermission
   end
 
   def short_label(category_name)
-    return label if label == category_name
+    return label if label == category_name || !label.end_with?(category_name)
 
     label.gsub(category_name, '').strip
   end
@@ -85,6 +85,10 @@ class RadPermission
 
         model_category_names.each do |category|
           return category.titleize if permission_name.end_with?(category)
+        end
+
+        model_category_names.reverse.each do |category|
+          return category.titleize if permission_name.include?(category)
         end
 
         'Other'
