@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'pretender'
   s.add_dependency 'puma', '~> 5.6'
   s.add_dependency 'pundit'
-  s.add_dependency 'rails', '~> 6.1.7.8'
+  s.add_dependency 'rails', '~> 7.0.8'
   s.add_dependency 'rails_email_validator'
 
   # TODO: remove this once this warning has been fixed, see Task 37778
