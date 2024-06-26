@@ -57,6 +57,6 @@ class SmartyAddress
     end
 
     def credentials
-      SmartyStreets::StaticCredentials.new(RadicalConfig.smarty_auth_id!, RadicalConfig.smarty_auth_token!)
+      SmartyStreets::StaticCredentials.new(RadConfig.smarty_auth_id!, RadConfig.smarty_auth_token!)
     end
 end

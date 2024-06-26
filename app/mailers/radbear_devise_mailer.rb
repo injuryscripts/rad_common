@@ -5,7 +5,7 @@ class RadbearDeviseMailer < Devise::Mailer
   layout 'radbear_mailer'
 
   before_action :set_defaults
-  default reply_to: RadicalConfig.admin_email!
+  default reply_to: RadConfig.admin_email!
 
   def confirmation_instructions(record, token, opts = {})
     @token = token
@@ -89,9 +89,9 @@ class RadbearDeviseMailer < Devise::Mailer
 
   def default_url_options
     if @resource.portal?
-      { host: RadicalConfig.portal_host_name!(@resource) }
+      { host: RadConfig.portal_host_name!(@resource) }
     else
-      { host: RadicalConfig.host_name! }
+      { host: RadConfig.host_name! }
     end
   end
 
@@ -102,6 +102,6 @@ class RadbearDeviseMailer < Devise::Mailer
     end
 
     def app_name
-      @resource.portal? ? RadicalConfig.portal_app_name!(@resource) : RadicalConfig.app_name!
+      @resource.portal? ? RadConfig.portal_app_name!(@resource) : RadConfig.app_name!
     end
 end

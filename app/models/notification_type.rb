@@ -170,7 +170,7 @@ class NotificationType < ApplicationRecord
       id_list = notify_user_ids_opted(:sms)
 
       id_list.each do |user_id|
-        UserSMSSenderJob.perform_later "Message from #{RadicalConfig.app_name!}: #{sms_content}",
+        UserSMSSenderJob.perform_later "Message from #{RadConfig.app_name!}: #{sms_content}",
                                        user_id,
                                        user_id,
                                        nil,

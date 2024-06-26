@@ -1,6 +1,6 @@
 class RadicalSendGrid
   def sendgrid_enabled?
-    RadicalConfig.sendgrid_api?
+    RadConfig.sendgrid_api?
   end
 
   def validate_email(email)
@@ -26,6 +26,6 @@ class RadicalSendGrid
   private
 
     def client
-      SendGrid::API.new(api_key: RadicalConfig.sendgrid_api_key!).client
+      SendGrid::API.new(api_key: RadConfig.sendgrid_api_key!).client
     end
 end

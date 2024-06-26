@@ -20,7 +20,7 @@ class RadicalJwtGenerator
     end
 
     def secret
-      RadicalConfig.jwt_secret!
+      RadConfig.jwt_secret!
     end
 
     def expires_at

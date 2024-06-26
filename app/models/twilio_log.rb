@@ -3,8 +3,8 @@ class TwilioLog < ApplicationRecord
   belongs_to :to_user, class_name: 'User', optional: true
 
   scope :from_system, -> { where(from_user_id: nil) }
-  scope :outgoing, -> { where(from_number: RadicalConfig.twilio_phone_number!) }
-  scope :incoming, -> { where(to_number: RadicalConfig.twilio_phone_number!) }
+  scope :outgoing, -> { where(from_number: RadConfig.twilio_phone_number!) }
+  scope :incoming, -> { where(to_number: RadConfig.twilio_phone_number!) }
 
   has_many_attached :attachments
 

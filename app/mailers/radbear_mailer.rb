@@ -5,15 +5,15 @@ class RadbearMailer < ActionMailer::Base
   layout 'radbear_mailer'
   before_action :set_defaults
 
-  default from: RadicalConfig.from_email!
-  default reply_to: RadicalConfig.admin_email!
+  default from: RadConfig.from_email!
+  default reply_to: RadConfig.admin_email!
 
   def your_account_approved(user)
     @email_action = { button_text: 'Get Started',
                       button_url: root_url }
 
     @recipient = user
-    @message = "Your account was approved and you can begin using #{RadicalConfig.app_name!}."
+    @message = "Your account was approved and you can begin using #{RadConfig.app_name!}."
     mail to: @recipient.formatted_email, subject: 'Your Account Was Approved'
   end
 
@@ -48,7 +48,7 @@ class RadbearMailer < ActionMailer::Base
     @message = "There #{@problems.count == 1 ? 'is' : 'are'} #{pluralize(@problems.count, 'invalid record')}."
 
     mail to: recipient.formatted_email,
-         subject: "Invalid data in #{RadicalConfig.app_name!}",
+         subject: "Invalid data in #{RadConfig.app_name!}",
          template_path: 'notification_mailer',
          template_name: 'global_validity'
   end
@@ -80,9 +80,9 @@ class RadbearMailer < ActionMailer::Base
     # this won't work for links called using the route helpers outside of the mailer context
     # this won't detect when to use the portal host unless @recipient is a User
 
-    return { host: RadicalConfig.portal_host_name!(@recipient) } if @recipient.is_a?(User) && @recipient.portal?
+    return { host: RadConfig.portal_host_name!(@recipient) } if @recipient.is_a?(User) && @recipient.portal?
 
-    { host: RadicalConfig.host_name! }
+    { host: RadConfig.host_name! }
   end
 
   private
@@ -107,7 +107,7 @@ class RadbearMailer < ActionMailer::Base
     end
 
     def app_name(user)
-      user.portal? ? RadicalConfig.portal_app_name!(user) : RadicalConfig.app_name!
+      user.portal? ? RadConfig.portal_app_name!(user) : RadConfig.app_name!
     end
 
     def escape_name(recipient_name)
