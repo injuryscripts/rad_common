@@ -76,7 +76,7 @@ module RadCommon
         end
 
         def log_sms!
-          @log = TwilioLog.create! to_number: RadicalConfig.twilio_phone_number!,
+          @log = TwilioLog.create! to_number: RadConfig.twilio_phone_number!,
                                    from_number: @phone_number,
                                    message: @incoming_message
         end
@@ -86,8 +86,8 @@ module RadCommon
 
           (0..(@params['NumMedia'].to_i - 1)).map do |counter|
             file = RadicalRetry.perform_request(retry_count: 2) do
-              URI.open(@params["MediaUrl#{counter}"], http_basic_authentication: [RadicalConfig.twilio_account_sid!,
-                                                                                  RadicalConfig.twilio_auth_token!])
+              URI.open(@params["MediaUrl#{counter}"], http_basic_authentication: [RadConfig.twilio_account_sid!,
+                                                                                  RadConfig.twilio_auth_token!])
             end
             filename = if file.respond_to?(:meta) && file.meta.has_key?('content-disposition')
                          file.meta['content-disposition'].match(/filename="[^"]+"/).to_s.gsub(/filename=|"/, '')
@@ -103,7 +103,7 @@ module RadCommon
         end
 
         def log_mms!
-          @log = TwilioLog.new to_number: RadicalConfig.twilio_phone_number!,
+          @log = TwilioLog.new to_number: RadConfig.twilio_phone_number!,
                                from_number: @phone_number,
                                message: @incoming_message.presence || 'MMS'
 

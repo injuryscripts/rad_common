@@ -14,7 +14,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def setup_totp?
-    return false unless RadicalConfig.twilio_verify_enabled? && user.twilio_verify_enabled?
+    return false unless RadConfig.twilio_verify_enabled? && user.twilio_verify_enabled?
 
     record == user
   end
@@ -30,7 +30,7 @@ class UserPolicy < ApplicationPolicy
   alias register_totp? setup_totp?
 
   def impersonate?
-    return false unless user.permission?(:admin) && RadicalConfig.impersonate?
+    return false unless user.permission?(:admin) && RadConfig.impersonate?
 
     user != record
   end

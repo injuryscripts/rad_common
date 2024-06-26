@@ -20,7 +20,7 @@ describe RadbearDeviseMailer, type: :mailer do
       let(:user) { create :user, :external }
 
       before do
-        allow(RadicalConfig).to receive(:portal?).and_return true
+        allow(RadConfig).to receive(:portal?).and_return true
         user.invite!
       end
 

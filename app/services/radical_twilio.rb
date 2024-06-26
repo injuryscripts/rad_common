@@ -32,15 +32,15 @@ class RadicalTwilio
   end
 
   def twilio_enabled?
-    RadicalConfig.twilio_enabled?
+    RadConfig.twilio_enabled?
   end
 
   def from_number
-    RadicalConfig.twilio_phone_number!
+    RadConfig.twilio_phone_number!
   end
 
   def from_number_mms
-    RadicalConfig.twilio_mms_phone_number!
+    RadConfig.twilio_mms_phone_number!
   end
 
   def validate_phone_number(phone_number, mobile)
@@ -53,7 +53,7 @@ class RadicalTwilio
 
       if mobile && response.carrier['type'] != 'mobile'
         return 'does not appear to be a valid mobile phone number'
-      elsif mobile && !response.country_code.in?(RadicalConfig.twilio_countries_enabled!)
+      elsif mobile && !response.country_code.in?(RadConfig.twilio_countries_enabled!)
         return 'country is not supported'
       end
 
@@ -77,7 +77,7 @@ class RadicalTwilio
   private
 
     def client
-      Twilio::REST::Client.new(RadicalConfig.twilio_account_sid!, RadicalConfig.twilio_auth_token!)
+      Twilio::REST::Client.new(RadConfig.twilio_account_sid!, RadConfig.twilio_auth_token!)
     end
 
     def get_phone_number(attribute, mobile)
@@ -86,7 +86,7 @@ class RadicalTwilio
     end
 
     def lookup_number(number, type = nil)
-      lookup_client = Twilio::REST::Client.new(RadicalConfig.twilio_account_sid!, RadicalConfig.twilio_auth_token!)
+      lookup_client = Twilio::REST::Client.new(RadConfig.twilio_account_sid!, RadConfig.twilio_auth_token!)
 
       RadicalRetry.perform_request(retry_count: 2, raise_original: true) do
         if type

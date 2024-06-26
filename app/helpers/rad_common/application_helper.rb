@@ -25,7 +25,7 @@ module RadCommon
     end
 
     def avatar_image(user, size)
-      if RadicalConfig.avatar? && user.avatar.attached?
+      if RadConfig.avatar? && user.avatar.attached?
         image_tag(user.avatar.variant(resize: '50x50'))
       else
         image_tag(gravatar_for(user, size))
@@ -182,7 +182,7 @@ module RadCommon
     end
 
     def verify_sign_up
-      raise RadicallyIntermittentException if RadicalConfig.disable_sign_up?
+      raise RadicallyIntermittentException if RadConfig.disable_sign_up?
     end
 
     def sign_up_roles
@@ -194,11 +194,11 @@ module RadCommon
     end
 
     def verify_invite
-      raise RadicallyIntermittentException if RadicalConfig.disable_invite?
+      raise RadicallyIntermittentException if RadConfig.disable_invite?
     end
 
     def verify_manually_create_users
-      return if RadicalConfig.disable_sign_up? && RadicalConfig.disable_invite?
+      return if RadConfig.disable_sign_up? && RadConfig.disable_invite?
 
       raise RadicallyIntermittentException
     end
@@ -212,7 +212,7 @@ module RadCommon
     end
 
     def portal_domain?
-      request.host_with_port == RadicalConfig.portal_host_name!
+      request.host_with_port == RadConfig.portal_host_name!
     end
 
     private

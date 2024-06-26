@@ -1,6 +1,6 @@
 require 'mail'
 
-class RadicalConfig
+class RadConfig
   class << self
     def default_language_code!
       config_item! :language_code

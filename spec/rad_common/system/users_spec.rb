@@ -66,10 +66,10 @@ RSpec.describe 'Users', type: :system do
     before { login_as admin, scope: :user }
 
     describe 'index' do
-      let(:result_label) { RadicalConfig.external_users? ? 'Users (2)' : 'Users (1)' }
+      let(:result_label) { RadConfig.external_users? ? 'Users (2)' : 'Users (1)' }
       let!(:pending_user) { create :user, user_status: pending_status }
 
-      before { external_user.update! user_status: user.user_status if RadicalConfig.external_users? }
+      before { external_user.update! user_status: user.user_status if RadConfig.external_users? }
 
       it 'shows users and all info' do
         visit users_path
@@ -78,7 +78,7 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content user.security_roles.first.name
         expect(page).to have_content 'Created'
         expect(page).to have_content 'Export to File'
-        expect(page).to have_content external_user.to_s if RadicalConfig.external_users?
+        expect(page).to have_content external_user.to_s if RadConfig.external_users?
       end
 
       it 'shows pending users' do
@@ -98,8 +98,8 @@ RSpec.describe 'Users', type: :system do
       let(:security_role) { create :security_role }
 
       before do
-        allow(RadicalConfig).to receive(:disable_sign_up?).and_return true
-        allow(RadicalConfig).to receive(:disable_invite?).and_return true
+        allow(RadConfig).to receive(:disable_sign_up?).and_return true
+        allow(RadConfig).to receive(:disable_invite?).and_return true
       end
 
       it 'renders the new template' do

@@ -67,7 +67,7 @@ module Contactable
   private
 
     def run_smarty?
-      return false if running_global_validity || !RadicalConfig.smarty_enabled? || bypass_address_validation?
+      return false if running_global_validity || !RadConfig.smarty_enabled? || bypass_address_validation?
 
       any_address_changes?
     end

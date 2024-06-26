@@ -148,7 +148,7 @@ module RadbearUser
   end
 
   def portal?
-    external? && RadicalConfig.portal?
+    external? && RadConfig.portal?
   end
 
   def read_notifications!
@@ -235,8 +235,8 @@ module RadbearUser
     end
 
     def validate_2fa_mobile_phone
-      return if !RadicalConfig.twilio_verify_enabled? || mobile_phone.present?
-      return if external? && RadicalConfig.twilio_verify_internal_only?
+      return if !RadConfig.twilio_verify_enabled? || mobile_phone.present?
+      return if external? && RadConfig.twilio_verify_internal_only?
 
       errors.add(:mobile_phone, 'is required for two factor authentication')
     end
