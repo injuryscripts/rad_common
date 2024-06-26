@@ -218,7 +218,7 @@ class RadConfig
     end
 
     def avatar?
-      boolean_config_item! :use_avatar
+      false
     end
 
     def twilio_verify_enabled?
