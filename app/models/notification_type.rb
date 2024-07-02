@@ -5,7 +5,7 @@ class NotificationType < ApplicationRecord
 
   attr_accessor :payload
 
-  alias_attribute :to_s, :description
+  alias_method :to_s, :description
 
   scope :by_type, -> { order(:type) }
 
