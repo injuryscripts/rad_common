@@ -10,9 +10,10 @@ module RadCommon
         policy(current_instance_variable).audit?
     end
 
-    def audit_history_link
-      "/rad_common/audits/?auditable_type=#{current_instance_variable.class}&auditable" \
-        "_id=#{current_instance_variable.id}"
+    def audit_history_link(auditable = nil)
+      auditable ||= current_instance_variable
+
+      "/rad_common/audits/?auditable_type=#{auditable.class}&auditable_id=#{auditable.id}"
     end
 
     def user_audit_history_link(user)
