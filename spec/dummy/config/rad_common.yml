@@ -19,6 +19,7 @@ default: &default
   twilio_verify_remember_device: 120 # minutes
   twilio_countries_enabled: 'US'
   shared_database: false
+  enable_super_search: true
 
   system_usage_models:
     -

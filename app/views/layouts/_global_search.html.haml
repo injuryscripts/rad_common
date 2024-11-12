@@ -38,14 +38,15 @@
                   size: '50',
                   type: 'text',
                   autocomplete: 'off' }
-          .input-group-append
-            %span.input-group-text
+          - if RadConfig.enable_super_search?
+            .input-group-append
+              %span.input-group-text
 
-              %span{ class: 'fa fa-globe',
-                     data: { toggle: 'tooltip', placement: 'top' },
-                     title: 'Super search takes longer than scoped search.' }
+                %span{ class: 'fa fa-globe',
+                      data: { toggle: 'tooltip', placement: 'top' },
+                      title: 'Super search takes longer than scoped search.' }
 
-              %input.super_search.ml-2{ type: 'checkbox', name: 'super_search' }
-              %input.global_search_id{ type: 'hidden', name: 'global_search_id' }
-              %input.global_search_model_name{ type: 'hidden', name: 'global_search_model_name' }
-              %input.global_search_scope{ type: 'hidden', name: 'global_search_scope' }
+                %input.super_search.ml-2{ type: 'checkbox', name: 'super_search' }
+                %input.global_search_id{ type: 'hidden', name: 'global_search_id' }
+                %input.global_search_model_name{ type: 'hidden', name: 'global_search_model_name' }
+                %input.global_search_scope{ type: 'hidden', name: 'global_search_scope' }
