@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'A library of common functions for a standard business web app, developed by Radical Bear'
   s.license = 'MIT'
   s.metadata['rubygems_mfa_required'] = 'true'
-  s.required_ruby_version = '>= 3.0.4'
+  s.required_ruby_version = '>= 3.3.6'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   s.bindir = 'bin'
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'pretender'
   s.add_dependency 'puma', '~> 5.6'
   s.add_dependency 'pundit'
-  s.add_dependency 'rails', '~> 7.1.3'
+  s.add_dependency 'rails', '~> 7.1.5'
   s.add_dependency 'rails_email_validator'
 
   # TODO: remove this once this warning has been fixed, see Task 37778

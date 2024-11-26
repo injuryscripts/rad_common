@@ -389,6 +389,10 @@ class RadConfig
       check_smarty!
     end
 
+    def enable_super_search?
+      boolean_config_item! :enable_super_search
+    end
+
     private
 
       def check_aws!

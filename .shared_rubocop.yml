@@ -4,7 +4,7 @@ require:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3.3
+  TargetRubyVersion: 3.3.6
   TargetRailsVersion: 6.0.3.4
   Exclude:
     - 'db/schema.rb'
@@ -207,10 +207,6 @@ Style/SignalException:
 
 RSpec/ExampleLength:
   Enabled: false
-
-RSpec/FactoryBot/CreateList:
-  Exclude:
-    - 'spec/dummy/app/services/seeder.rb'
 
 RSpec/MultipleExpectations:
   Enabled: false
